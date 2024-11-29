@@ -156,11 +156,17 @@ public:
   }
 };
 
+
 int main(int argc, char *argv[]) {
+  if (argc < 2) {
+    std::cerr << "Usage: " << argv[0] << " <instruction_file>" << std::endl;
+    return 1;
+  }
+
   std::vector<Operation *> operations;
-  std::ifstream input("instructions.txt");
+  std::ifstream input(argv[1]);
   if (!input.is_open()) {
-    std::cerr << "Error reading file.\n";
+    std::cerr << "Error opening file: " << argv[1] << std::endl;
     return 1;
   }
 
