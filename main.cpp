@@ -95,7 +95,7 @@ public:
   void issueOperations() {
     for (Operation *op : opQueue) {
       if (!op->issued) {
-        ComputeUnit *availableUnit = findAvailableUnit(op->opcode);
+        ComputeUnit *availableUnit = findAvailableUnit(op);
         if (availableUnit) {
           op->issued = true;
           op->executing = true;
@@ -107,9 +107,9 @@ public:
     }
   }
 
-  ComputeUnit *findAvailableUnit(const std::string &opType) {
+  ComputeUnit *findAvailableUnit(Operation *op) {
     std::vector<ComputeUnit *> *unitList = &arithmeticUnits;
-    if (opType == "load" || opType == "store") {
+    if (op->opcode == "load" || op->opcode == "store") {
       unitList = &memoryUnits;
     }
     for (ComputeUnit *unit : *unitList) {
@@ -122,7 +122,16 @@ public:
 
   void processExecution() {
     for (ComputeUnit *unit : arithmeticUnits) {
-      if (unit->inUse) {
+      if (unit->inUse && unit->currentOp->executing) {
+        unit->currentOp->cyclesLeft--;
+        if (unit->currentOp->cyclesLeft == 0) {
+          unit->currentOp->executing = false;
+        }
+      }
+    }
+
+    for (ComputeUnit *unit : memoryUnits) {
+      if (unit->inUse && unit->currentOp->executing) {
         unit->currentOp->cyclesLeft--;
         if (unit->currentOp->cyclesLeft == 0) {
           unit->currentOp->executing = false;
@@ -133,6 +142,13 @@ public:
 
   void completeWriteBack() {
     for (ComputeUnit *unit : arithmeticUnits) {
+      if (unit->inUse && !unit->currentOp->executing) {
+        unit->currentOp->completed = true;
+        unit->inUse = false;
+      }
+    }
+
+    for (ComputeUnit *unit : memoryUnits) {
       if (unit->inUse && !unit->currentOp->executing) {
         unit->currentOp->completed = true;
         unit->inUse = false;
@@ -181,14 +197,30 @@ public:
 
     std::cout << "\n";
   }
+
   void simulate() {
     while (!isAllCompleted()) {
       executeCycle();
     }
     std::cout << "Execution completed in " << currentCycle << " cycles.\n";
   }
-};
 
+  ~Scheduler() {
+    // Clean up dynamically allocated memory
+    for (Operation *op : opQueue) {
+      delete op;
+    }
+    for (ComputeUnit *unit : arithmeticUnits) {
+      delete unit;
+    }
+    for (ComputeUnit *unit : memoryUnits) {
+      delete unit;
+    }
+    for (CPURegister *reg : cpuRegisters) {
+      delete reg;
+    }
+  }
+};
 
 int main(int argc, char *argv[]) {
   if (argc < 2) {
@@ -221,8 +253,5 @@ int main(int argc, char *argv[]) {
   Scheduler scheduler(operations, config);
   scheduler.simulate();
 
-  for (Operation *op : operations) {
-    delete op;
-  }
   return 0;
 }
