@@ -88,6 +88,7 @@ public:
     issueOperations();
     processExecution();
     completeWriteBack();
+    printCycleStatus();
     currentCycle++;
   }
 
@@ -148,6 +149,38 @@ public:
     return true;
   }
 
+  void printCycleStatus() {
+    std::cout << "Cycle " << currentCycle << ":\n";
+
+    // Print Operation States
+    std::cout << "Operations Status:\n";
+    for (Operation *op : opQueue) {
+      std::cout << "  " << op->opcode << " " << op->target
+                << " (issued: " << op->issued
+                << ", executing: " << op->executing
+                << ", completed: " << op->completed << ")\n";
+    }
+
+    // Print Compute Unit States
+    std::cout << "Compute Units Status:\n";
+    for (ComputeUnit *unit : arithmeticUnits) {
+      std::cout << "  " << unit->category << " unit, in use: " << unit->inUse;
+      if (unit->inUse) {
+        std::cout << ", operation: " << unit->currentOp->opcode;
+      }
+      std::cout << "\n";
+    }
+
+    // Print Register States
+    std::cout << "Registers Status:\n";
+    for (CPURegister *reg : cpuRegisters) {
+      std::cout << "  " << reg->label << " (data: " << reg->data
+                << ", readBusy: " << reg->readBusy
+                << ", writeBusy: " << reg->writeBusy << ")\n";
+    }
+
+    std::cout << "\n";
+  }
   void simulate() {
     while (!isAllCompleted()) {
       executeCycle();
