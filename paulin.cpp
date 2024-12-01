@@ -184,6 +184,8 @@ public:
             }
         }
 
+        detectDependencies(outputFile);
+
         // Integrated register status logging
         outputFile << "\n\n> Status dos Registradores:";
         outputFile << "\n"
@@ -540,6 +542,76 @@ public:
             return src1 / src2;
         }
         return 0;
+    }
+    void detectDependencies(std::ofstream &outputFile)
+    {
+        outputFile << "\n> Dependências de Instruções Recém-Lidas:";
+
+        for (size_t i = 0; i < instructions.size(); i++)
+        {
+            // Only check recently issued instructions
+            if (instructions[i]->isIssued && !instructions[i]->isExecuting && !instructions[i]->isCompleted)
+            {
+                // Check source registers for dependencies
+                std::vector<std::string> dependencyTypes = checkRegisterDependencies(instructions[i]);
+
+                if (!dependencyTypes.empty())
+                {
+                    outputFile << "\n Instrução: "
+                               << instructions[i]->op << " "
+                               << instructions[i]->dest << " "
+                               << instructions[i]->src1 << " "
+                               << instructions[i]->src2;
+
+                    for (const auto &depType : dependencyTypes)
+                    {
+                        outputFile << "\n  - " << depType;
+                    }
+                }
+            }
+        }
+    }
+    std::vector<std::string> checkRegisterDependencies(OperationInstruction *instruction)
+    {
+        std::vector<std::string> dependencies;
+
+        // Check destination register dependencies
+        Register *destReg = getRegister(instruction->dest);
+        if (destReg->busyRead || destReg->busyWrite)
+        {
+            // Only add dependency if the source instruction has not executed
+            if (destReg->instruction &&
+                !(destReg->instruction->isCompleted))
+            {
+                dependencies.push_back("Dependência Falsa (WAR/WAW) no registrador de destino: " + destReg->name);
+            }
+        }
+
+        // Check source register 1 dependencies
+        Register *src1Reg = getRegister(instruction->src1);
+        if (src1Reg && (src1Reg->busyRead || src1Reg->busyWrite))
+        {
+            // Only add dependency if the source instruction has not executed
+            if (src1Reg->instruction &&
+                !(src1Reg->instruction->isCompleted))
+            {
+                dependencies.push_back("Dependência Verdadeira (RAW) no primeiro registrador fonte: " + src1Reg->name);
+            }
+        }
+
+        // Check source register 2 dependencies
+        Register *src2Reg = getRegister(instruction->src2);
+        if (src2Reg && (src2Reg->busyRead || src2Reg->busyWrite))
+        {
+            // Only add dependency if the source instruction has not executed
+            if (src2Reg->instruction &&
+                !(src2Reg->instruction->isCompleted))
+            {
+                dependencies.push_back("Dependência Verdadeira (RAW) no segundo registrador fonte: " + src2Reg->name);
+            }
+        }
+
+        return dependencies;
     }
 };
 
