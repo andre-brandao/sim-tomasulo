@@ -1,0 +1,440 @@
+
+------------
+Ciclo 1
+> Lidas: 
+ div F0 F1 F2
+> Em execução:
+> Concluídas:
+
+> Status dos Registradores:
+Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
+----------------------------------------------------------------------
+F0          1         Livre          Livre          Nenhuma
+F1          1         Livre          Livre          Nenhuma
+F2          1         Livre          Livre          Nenhuma
+F3          1         Livre          Livre          Nenhuma
+F4          1         Livre          Livre          Nenhuma
+F5          1         Livre          Livre          Nenhuma
+F6          1         Livre          Livre          Nenhuma
+F7          1         Livre          Livre          Nenhuma
+F8          1         Livre          Livre          Nenhuma
+F9          1         Livre          Livre          Nenhuma
+F10         1         Livre          Livre          Nenhuma
+F11         1         Livre          Livre          Nenhuma
+F12         1         Livre          Livre          Nenhuma
+F13         1         Livre          Livre          Nenhuma
+F14         1         Livre          Livre          Nenhuma
+F15         1         Livre          Livre          Nenhuma
+R0          1         Livre          Livre          Nenhuma
+R1          1         Livre          Livre          Nenhuma
+R2          1         Livre          Livre          Nenhuma
+R3          1         Livre          Livre          Nenhuma
+R4          1         Livre          Livre          Nenhuma
+R5          1         Livre          Livre          Nenhuma
+R6          1         Livre          Livre          Nenhuma
+R7          1         Livre          Livre          Nenhuma
+R8          1         Livre          Livre          Nenhuma
+R9          1         Livre          Livre          Nenhuma
+R10         1         Livre          Livre          Nenhuma
+R11         1         Livre          Livre          Nenhuma
+R12         1         Livre          Livre          Nenhuma
+R13         1         Livre          Livre          Nenhuma
+R14         1         Livre          Livre          Nenhuma
+R15         1         Livre          Livre          Nenhuma
+----------------------------------------------------------------------
+
+
+------------
+Ciclo 2
+> Lidas: 
+ div F0 F1 F2
+ add F3 F0 F4
+> Em execução:
+ div F0 F1 F2
+> Concluídas:
+
+> Status dos Registradores:
+Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
+----------------------------------------------------------------------
+F0          1         Livre          Ocupado        div F0 F1 F2
+F1          1         Ocupado        Livre          div F0 F1 F2
+F2          1         Ocupado        Livre          div F0 F1 F2
+F3          1         Livre          Livre          Nenhuma
+F4          1         Livre          Livre          Nenhuma
+F5          1         Livre          Livre          Nenhuma
+F6          1         Livre          Livre          Nenhuma
+F7          1         Livre          Livre          Nenhuma
+F8          1         Livre          Livre          Nenhuma
+F9          1         Livre          Livre          Nenhuma
+F10         1         Livre          Livre          Nenhuma
+F11         1         Livre          Livre          Nenhuma
+F12         1         Livre          Livre          Nenhuma
+F13         1         Livre          Livre          Nenhuma
+F14         1         Livre          Livre          Nenhuma
+F15         1         Livre          Livre          Nenhuma
+R0          1         Livre          Livre          Nenhuma
+R1          1         Livre          Livre          Nenhuma
+R2          1         Livre          Livre          Nenhuma
+R3          1         Livre          Livre          Nenhuma
+R4          1         Livre          Livre          Nenhuma
+R5          1         Livre          Livre          Nenhuma
+R6          1         Livre          Livre          Nenhuma
+R7          1         Livre          Livre          Nenhuma
+R8          1         Livre          Livre          Nenhuma
+R9          1         Livre          Livre          Nenhuma
+R10         1         Livre          Livre          Nenhuma
+R11         1         Livre          Livre          Nenhuma
+R12         1         Livre          Livre          Nenhuma
+R13         1         Livre          Livre          Nenhuma
+R14         1         Livre          Livre          Nenhuma
+R15         1         Livre          Livre          Nenhuma
+----------------------------------------------------------------------
+
+
+------------
+Ciclo 3
+> Lidas: 
+ div F0 F1 F2
+ add F3 F0 F4
+ sub F12 F10 F11
+> Em execução:
+ div F0 F1 F2
+> Concluídas:
+
+> Status dos Registradores:
+Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
+----------------------------------------------------------------------
+F0          1         Livre          Ocupado        div F0 F1 F2
+F1          1         Ocupado        Livre          div F0 F1 F2
+F2          1         Ocupado        Livre          div F0 F1 F2
+F3          1         Livre          Livre          Nenhuma
+F4          1         Livre          Livre          Nenhuma
+F5          1         Livre          Livre          Nenhuma
+F6          1         Livre          Livre          Nenhuma
+F7          1         Livre          Livre          Nenhuma
+F8          1         Livre          Livre          Nenhuma
+F9          1         Livre          Livre          Nenhuma
+F10         1         Livre          Livre          Nenhuma
+F11         1         Livre          Livre          Nenhuma
+F12         1         Livre          Livre          Nenhuma
+F13         1         Livre          Livre          Nenhuma
+F14         1         Livre          Livre          Nenhuma
+F15         1         Livre          Livre          Nenhuma
+R0          1         Livre          Livre          Nenhuma
+R1          1         Livre          Livre          Nenhuma
+R2          1         Livre          Livre          Nenhuma
+R3          1         Livre          Livre          Nenhuma
+R4          1         Livre          Livre          Nenhuma
+R5          1         Livre          Livre          Nenhuma
+R6          1         Livre          Livre          Nenhuma
+R7          1         Livre          Livre          Nenhuma
+R8          1         Livre          Livre          Nenhuma
+R9          1         Livre          Livre          Nenhuma
+R10         1         Livre          Livre          Nenhuma
+R11         1         Livre          Livre          Nenhuma
+R12         1         Livre          Livre          Nenhuma
+R13         1         Livre          Livre          Nenhuma
+R14         1         Livre          Livre          Nenhuma
+R15         1         Livre          Livre          Nenhuma
+----------------------------------------------------------------------
+
+
+------------
+Ciclo 4
+> Lidas: 
+ div F0 F1 F2
+ add F3 F0 F4
+ sub F12 F10 F11
+> Em execução:
+ div F0 F1 F2
+ sub F12 F10 F11
+> Concluídas:
+
+> Status dos Registradores:
+Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
+----------------------------------------------------------------------
+F0          1         Livre          Ocupado        div F0 F1 F2
+F1          1         Ocupado        Livre          div F0 F1 F2
+F2          1         Ocupado        Livre          div F0 F1 F2
+F3          1         Livre          Livre          Nenhuma
+F4          1         Livre          Livre          Nenhuma
+F5          1         Livre          Livre          Nenhuma
+F6          1         Livre          Livre          Nenhuma
+F7          1         Livre          Livre          Nenhuma
+F8          1         Livre          Livre          Nenhuma
+F9          1         Livre          Livre          Nenhuma
+F10         1         Ocupado        Livre          sub F12 F10 F11
+F11         1         Ocupado        Livre          sub F12 F10 F11
+F12         1         Livre          Ocupado        sub F12 F10 F11
+F13         1         Livre          Livre          Nenhuma
+F14         1         Livre          Livre          Nenhuma
+F15         1         Livre          Livre          Nenhuma
+R0          1         Livre          Livre          Nenhuma
+R1          1         Livre          Livre          Nenhuma
+R2          1         Livre          Livre          Nenhuma
+R3          1         Livre          Livre          Nenhuma
+R4          1         Livre          Livre          Nenhuma
+R5          1         Livre          Livre          Nenhuma
+R6          1         Livre          Livre          Nenhuma
+R7          1         Livre          Livre          Nenhuma
+R8          1         Livre          Livre          Nenhuma
+R9          1         Livre          Livre          Nenhuma
+R10         1         Livre          Livre          Nenhuma
+R11         1         Livre          Livre          Nenhuma
+R12         1         Livre          Livre          Nenhuma
+R13         1         Livre          Livre          Nenhuma
+R14         1         Livre          Livre          Nenhuma
+R15         1         Livre          Livre          Nenhuma
+----------------------------------------------------------------------
+
+
+------------
+Ciclo 5
+> Lidas: 
+ div F0 F1 F2
+ add F3 F0 F4
+ sub F12 F10 F11
+> Em execução:
+ sub F12 F10 F11
+> Concluídas:
+ div F0 F1 F2
+
+> Status dos Registradores:
+Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
+----------------------------------------------------------------------
+F0          1         Livre          Livre          Nenhuma
+F1          1         Livre          Livre          Nenhuma
+F2          1         Livre          Livre          Nenhuma
+F3          1         Livre          Livre          Nenhuma
+F4          1         Livre          Livre          Nenhuma
+F5          1         Livre          Livre          Nenhuma
+F6          1         Livre          Livre          Nenhuma
+F7          1         Livre          Livre          Nenhuma
+F8          1         Livre          Livre          Nenhuma
+F9          1         Livre          Livre          Nenhuma
+F10         1         Ocupado        Livre          sub F12 F10 F11
+F11         1         Ocupado        Livre          sub F12 F10 F11
+F12         1         Livre          Ocupado        sub F12 F10 F11
+F13         1         Livre          Livre          Nenhuma
+F14         1         Livre          Livre          Nenhuma
+F15         1         Livre          Livre          Nenhuma
+R0          1         Livre          Livre          Nenhuma
+R1          1         Livre          Livre          Nenhuma
+R2          1         Livre          Livre          Nenhuma
+R3          1         Livre          Livre          Nenhuma
+R4          1         Livre          Livre          Nenhuma
+R5          1         Livre          Livre          Nenhuma
+R6          1         Livre          Livre          Nenhuma
+R7          1         Livre          Livre          Nenhuma
+R8          1         Livre          Livre          Nenhuma
+R9          1         Livre          Livre          Nenhuma
+R10         1         Livre          Livre          Nenhuma
+R11         1         Livre          Livre          Nenhuma
+R12         1         Livre          Livre          Nenhuma
+R13         1         Livre          Livre          Nenhuma
+R14         1         Livre          Livre          Nenhuma
+R15         1         Livre          Livre          Nenhuma
+----------------------------------------------------------------------
+
+
+------------
+Ciclo 6
+> Lidas: 
+ div F0 F1 F2
+ add F3 F0 F4
+ sub F12 F10 F11
+> Em execução:
+ add F3 F0 F4
+ sub F12 F10 F11
+> Concluídas:
+ div F0 F1 F2
+
+> Status dos Registradores:
+Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
+----------------------------------------------------------------------
+F0          1         Ocupado        Livre          add F3 F0 F4
+F1          1         Livre          Livre          Nenhuma
+F2          1         Livre          Livre          Nenhuma
+F3          1         Livre          Ocupado        add F3 F0 F4
+F4          1         Ocupado        Livre          add F3 F0 F4
+F5          1         Livre          Livre          Nenhuma
+F6          1         Livre          Livre          Nenhuma
+F7          1         Livre          Livre          Nenhuma
+F8          1         Livre          Livre          Nenhuma
+F9          1         Livre          Livre          Nenhuma
+F10         1         Ocupado        Livre          sub F12 F10 F11
+F11         1         Ocupado        Livre          sub F12 F10 F11
+F12         1         Livre          Ocupado        sub F12 F10 F11
+F13         1         Livre          Livre          Nenhuma
+F14         1         Livre          Livre          Nenhuma
+F15         1         Livre          Livre          Nenhuma
+R0          1         Livre          Livre          Nenhuma
+R1          1         Livre          Livre          Nenhuma
+R2          1         Livre          Livre          Nenhuma
+R3          1         Livre          Livre          Nenhuma
+R4          1         Livre          Livre          Nenhuma
+R5          1         Livre          Livre          Nenhuma
+R6          1         Livre          Livre          Nenhuma
+R7          1         Livre          Livre          Nenhuma
+R8          1         Livre          Livre          Nenhuma
+R9          1         Livre          Livre          Nenhuma
+R10         1         Livre          Livre          Nenhuma
+R11         1         Livre          Livre          Nenhuma
+R12         1         Livre          Livre          Nenhuma
+R13         1         Livre          Livre          Nenhuma
+R14         1         Livre          Livre          Nenhuma
+R15         1         Livre          Livre          Nenhuma
+----------------------------------------------------------------------
+
+
+------------
+Ciclo 7
+> Lidas: 
+ div F0 F1 F2
+ add F3 F0 F4
+ sub F12 F10 F11
+> Em execução:
+ add F3 F0 F4
+> Concluídas:
+ div F0 F1 F2
+ sub F12 F10 F11
+
+> Status dos Registradores:
+Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
+----------------------------------------------------------------------
+F0          1         Ocupado        Livre          add F3 F0 F4
+F1          1         Livre          Livre          Nenhuma
+F2          1         Livre          Livre          Nenhuma
+F3          1         Livre          Ocupado        add F3 F0 F4
+F4          1         Ocupado        Livre          add F3 F0 F4
+F5          1         Livre          Livre          Nenhuma
+F6          1         Livre          Livre          Nenhuma
+F7          1         Livre          Livre          Nenhuma
+F8          1         Livre          Livre          Nenhuma
+F9          1         Livre          Livre          Nenhuma
+F10         1         Livre          Livre          Nenhuma
+F11         1         Livre          Livre          Nenhuma
+F12         0         Livre          Livre          Nenhuma
+F13         1         Livre          Livre          Nenhuma
+F14         1         Livre          Livre          Nenhuma
+F15         1         Livre          Livre          Nenhuma
+R0          1         Livre          Livre          Nenhuma
+R1          1         Livre          Livre          Nenhuma
+R2          1         Livre          Livre          Nenhuma
+R3          1         Livre          Livre          Nenhuma
+R4          1         Livre          Livre          Nenhuma
+R5          1         Livre          Livre          Nenhuma
+R6          1         Livre          Livre          Nenhuma
+R7          1         Livre          Livre          Nenhuma
+R8          1         Livre          Livre          Nenhuma
+R9          1         Livre          Livre          Nenhuma
+R10         1         Livre          Livre          Nenhuma
+R11         1         Livre          Livre          Nenhuma
+R12         1         Livre          Livre          Nenhuma
+R13         1         Livre          Livre          Nenhuma
+R14         1         Livre          Livre          Nenhuma
+R15         1         Livre          Livre          Nenhuma
+----------------------------------------------------------------------
+
+
+------------
+Ciclo 8
+> Lidas: 
+ div F0 F1 F2
+ add F3 F0 F4
+ sub F12 F10 F11
+> Em execução:
+ add F3 F0 F4
+> Concluídas:
+ div F0 F1 F2
+ sub F12 F10 F11
+
+> Status dos Registradores:
+Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
+----------------------------------------------------------------------
+F0          1         Ocupado        Livre          add F3 F0 F4
+F1          1         Livre          Livre          Nenhuma
+F2          1         Livre          Livre          Nenhuma
+F3          1         Livre          Ocupado        add F3 F0 F4
+F4          1         Ocupado        Livre          add F3 F0 F4
+F5          1         Livre          Livre          Nenhuma
+F6          1         Livre          Livre          Nenhuma
+F7          1         Livre          Livre          Nenhuma
+F8          1         Livre          Livre          Nenhuma
+F9          1         Livre          Livre          Nenhuma
+F10         1         Livre          Livre          Nenhuma
+F11         1         Livre          Livre          Nenhuma
+F12         0         Livre          Livre          Nenhuma
+F13         1         Livre          Livre          Nenhuma
+F14         1         Livre          Livre          Nenhuma
+F15         1         Livre          Livre          Nenhuma
+R0          1         Livre          Livre          Nenhuma
+R1          1         Livre          Livre          Nenhuma
+R2          1         Livre          Livre          Nenhuma
+R3          1         Livre          Livre          Nenhuma
+R4          1         Livre          Livre          Nenhuma
+R5          1         Livre          Livre          Nenhuma
+R6          1         Livre          Livre          Nenhuma
+R7          1         Livre          Livre          Nenhuma
+R8          1         Livre          Livre          Nenhuma
+R9          1         Livre          Livre          Nenhuma
+R10         1         Livre          Livre          Nenhuma
+R11         1         Livre          Livre          Nenhuma
+R12         1         Livre          Livre          Nenhuma
+R13         1         Livre          Livre          Nenhuma
+R14         1         Livre          Livre          Nenhuma
+R15         1         Livre          Livre          Nenhuma
+----------------------------------------------------------------------
+
+
+------------
+Ciclo 9
+> Lidas: 
+ div F0 F1 F2
+ add F3 F0 F4
+ sub F12 F10 F11
+> Em execução:
+> Concluídas:
+ div F0 F1 F2
+ add F3 F0 F4
+ sub F12 F10 F11
+
+> Status dos Registradores:
+Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
+----------------------------------------------------------------------
+F0          1         Livre          Livre          Nenhuma
+F1          1         Livre          Livre          Nenhuma
+F2          1         Livre          Livre          Nenhuma
+F3          2         Livre          Livre          Nenhuma
+F4          1         Livre          Livre          Nenhuma
+F5          1         Livre          Livre          Nenhuma
+F6          1         Livre          Livre          Nenhuma
+F7          1         Livre          Livre          Nenhuma
+F8          1         Livre          Livre          Nenhuma
+F9          1         Livre          Livre          Nenhuma
+F10         1         Livre          Livre          Nenhuma
+F11         1         Livre          Livre          Nenhuma
+F12         0         Livre          Livre          Nenhuma
+F13         1         Livre          Livre          Nenhuma
+F14         1         Livre          Livre          Nenhuma
+F15         1         Livre          Livre          Nenhuma
+R0          1         Livre          Livre          Nenhuma
+R1          1         Livre          Livre          Nenhuma
+R2          1         Livre          Livre          Nenhuma
+R3          1         Livre          Livre          Nenhuma
+R4          1         Livre          Livre          Nenhuma
+R5          1         Livre          Livre          Nenhuma
+R6          1         Livre          Livre          Nenhuma
+R7          1         Livre          Livre          Nenhuma
+R8          1         Livre          Livre          Nenhuma
+R9          1         Livre          Livre          Nenhuma
+R10         1         Livre          Livre          Nenhuma
+R11         1         Livre          Livre          Nenhuma
+R12         1         Livre          Livre          Nenhuma
+R13         1         Livre          Livre          Nenhuma
+R14         1         Livre          Livre          Nenhuma
+R15         1         Livre          Livre          Nenhuma
+----------------------------------------------------------------------
+
+
+Execução completa

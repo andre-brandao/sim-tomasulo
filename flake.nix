@@ -7,11 +7,9 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-
-      ...
+    { self
+    , nixpkgs
+    , ...
     }@inputs:
     let
 
@@ -27,10 +25,17 @@
           pkgs.cmake
           # pkgs.make
 
-          (pkgs.writeShellScriptBin "compile" ''
-                        
+          (pkgs.writeShellScriptBin "compile" ''         
             g++ -o tomasulo main.cpp
           '')
+
+          (pkgs.writeShellScriptBin "compile-original" ''         
+            g++ -o original original.cpp
+          '')
+          (pkgs.writeShellScriptBin "compile-paulin" ''         
+            g++ -o paulin paulin.cpp
+          '')
+
         ];
 
       };
