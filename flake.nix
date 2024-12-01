@@ -29,13 +29,6 @@
             g++ -o tomasulo main.cpp
           '')
 
-          (pkgs.writeShellScriptBin "compile-original" ''         
-            g++ -o original original.cpp
-          '')
-          (pkgs.writeShellScriptBin "compile-paulin" ''         
-            g++ -o paulin paulin.cpp
-          '')
-
         ];
 
       };
