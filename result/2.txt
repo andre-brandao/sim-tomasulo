@@ -5,7 +5,6 @@ Ciclo 1
  div F0 F1 F2
 > Em execução:
 > Concluídas:
-> Dependências de Instruções Recém-Lidas:
 
 > Status dos Registradores:
 Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
@@ -53,9 +52,6 @@ Ciclo 2
 > Em execução:
  div F0 F1 F2
 > Concluídas:
-> Dependências de Instruções Recém-Lidas:
- Instrução: add F3 F0 F4
-  - Dependência Verdadeira (RAW) no primeiro registrador fonte: F0
 
 > Status dos Registradores:
 Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
@@ -104,9 +100,6 @@ Ciclo 3
 > Em execução:
  div F0 F1 F2
 > Concluídas:
-> Dependências de Instruções Recém-Lidas:
- Instrução: add F3 F0 F4
-  - Dependência Verdadeira (RAW) no primeiro registrador fonte: F0
 
 > Status dos Registradores:
 Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
@@ -156,9 +149,6 @@ Ciclo 4
  div F0 F1 F2
  sub F12 F10 F11
 > Concluídas:
-> Dependências de Instruções Recém-Lidas:
- Instrução: add F3 F0 F4
-  - Dependência Verdadeira (RAW) no primeiro registrador fonte: F0
 
 > Status dos Registradores:
 Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
@@ -208,7 +198,6 @@ Ciclo 5
  sub F12 F10 F11
 > Concluídas:
  div F0 F1 F2
-> Dependências de Instruções Recém-Lidas:
 
 > Status dos Registradores:
 Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
@@ -259,7 +248,6 @@ Ciclo 6
  sub F12 F10 F11
 > Concluídas:
  div F0 F1 F2
-> Dependências de Instruções Recém-Lidas:
 
 > Status dos Registradores:
 Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
@@ -310,7 +298,6 @@ Ciclo 7
 > Concluídas:
  div F0 F1 F2
  sub F12 F10 F11
-> Dependências de Instruções Recém-Lidas:
 
 > Status dos Registradores:
 Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
@@ -361,7 +348,6 @@ Ciclo 8
 > Concluídas:
  div F0 F1 F2
  sub F12 F10 F11
-> Dependências de Instruções Recém-Lidas:
 
 > Status dos Registradores:
 Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
@@ -412,7 +398,6 @@ Ciclo 9
  div F0 F1 F2
  add F3 F0 F4
  sub F12 F10 F11
-> Dependências de Instruções Recém-Lidas:
 
 > Status dos Registradores:
 Registrador Valor     (Leitura)      (Escrita)      Instrução Associada
