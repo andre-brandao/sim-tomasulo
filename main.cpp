@@ -5,7 +5,7 @@
 #include <map>
 #include <iomanip>
 
-// Constantes de configuração
+// Constantes de configuração para as unidades funcionais e registradores
 const int ADD_UNIT_CLOCK = 4;
 const int MUL_UNIT_CLOCK = 4;
 const int SW_UNIT_CLOCK = 2;
@@ -15,19 +15,19 @@ const int SW_UNIT_QNT = 2;
 const int REGISTER_QNT = 16;
 
 // Definindo a estrutura de uma instrução
-class OperationInstruction
+class Operation
 {
 public:
-  std::string op;   // Operação (add, sub, mul, div, etc.)
+  std::string op;   // Tipo da operação (add, sub, mul, etc.)
   std::string dest; // Registrador de destino
-  std::string src1; // Operando 1
-  std::string src2; // Operando 2
-  int execCycles;   // Ciclos de execução restantes
-  bool isIssued;
-  bool isExecuting; // Indica se está em execução
-  bool isCompleted; // Indica se está concluída
+  std::string src1; // Primeiro operando
+  std::string src2; // Segundo operando
+  int execCycles;   // Ciclos restantes de execução
+  bool isIssued;    // Se a instrução foi emitida
+  bool isExecuting; // Se a instrução está em execução
+  bool isCompleted; // Se a instrução foi concluída
 
-  OperationInstruction(std::string op, std::string dest, std::string src1, std::string src2)
+  Operation(std::string op, std::string dest, std::string src1, std::string src2)
       : op(op), dest(dest), src1(src1), src2(src2), execCycles(0), isIssued(false), isExecuting(false), isCompleted(false) {}
 };
 
@@ -35,10 +35,10 @@ public:
 class FunctionalUnit
 {
 public:
-  std::string type;                  // Tipo da unidade funcional (ex: add, mul)
-  int latency;                       // Ciclos de latência da unidade funcional
-  bool busy;                         // Indica se está ocupada
-  OperationInstruction *instruction; // Instrução atualmente em execução
+  std::string type;       // Tipo da unidade funcional (ex: add, mul)
+  int latency;            // Ciclos de latência da unidade funcional
+  bool busy;              // Indica se está ocupada
+  Operation *instruction; // Instrução atualmente em execução
 
   FunctionalUnit(std::string type, int latency)
       : type(type), latency(latency), busy(false), instruction(nullptr) {}
@@ -48,11 +48,11 @@ public:
 class Register
 {
 public:
-  std::string name;                  // Nome do registrador
-  int value;                         // Valor atual do registrador
-  bool busyRead;                     // Indica se o registrador está sendo lido
-  bool busyWrite;                    // Indica se o registrador está sendo escrito
-  OperationInstruction *instruction; // Instrução que está utilizando o registrador
+  std::string name;       // Nome do registrador
+  int value;              // Valor atual do registrador
+  bool busyRead;          // Indica se o registrador está sendo lido
+  bool busyWrite;         // Indica se o registrador está sendo escrito
+  Operation *instruction; // Instrução que está utilizando o registrador
 
   Register(std::string name, int value)
       : name(name), value(value), busyRead(false), busyWrite(false), instruction(nullptr) {}
@@ -62,17 +62,17 @@ public:
 class Scheduler
 {
 public:
-  std::vector<OperationInstruction *> instructions; // Lista de instruções
-  std::vector<FunctionalUnit *> addUnits;           // Unidades funcionais de soma
-  std::vector<FunctionalUnit *> mulUnits;           // Unidades funcionais de multiplicação
-  std::vector<FunctionalUnit *> swUnits;            // Unidades funcionais de store word
-  std::vector<Register *> registers;                // Registradores
-  std::map<std::string, std::string> rename;
-  int cycle; // Ciclo atual
-  std::vector<int> cacheMem;
-  std::ofstream &outputFile; // Referência ao arquivo de saída
+  std::vector<Operation *> instructions;     // Lista de instruções
+  std::vector<FunctionalUnit *> addUnits;    // Unidades funcionais de soma
+  std::vector<FunctionalUnit *> mulUnits;    // Unidades funcionais de multiplicação
+  std::vector<FunctionalUnit *> swUnits;     // Unidades funcionais de store/load
+  std::vector<Register *> registers;         // Lista de registradores
+  std::map<std::string, std::string> rename; // Mapeamento para renomeação de registradores
+  int cycle;                                 // Ciclo atual
+  std::vector<int> cacheMem;                 // Cache de memória simulada
+  std::ofstream &outputFile;                 // Referência para o arquivo de saída
 
-  Scheduler(std::vector<OperationInstruction *> instructions, std::ofstream &outputFile)
+  Scheduler(std::vector<Operation *> instructions, std::ofstream &outputFile)
       : instructions(instructions), outputFile(outputFile), cycle(1), cacheMem(32, 2)
   {
     addUnits = createFunctionalUnits(ADD_UNIT_QNT, "add", ADD_UNIT_CLOCK);
@@ -135,15 +135,15 @@ public:
   // Executa o algoritmo de Tomasulo
   void run()
   {
-    while (!isExecutionComplete())
+    while (!isExecutionComplete()) // Continua até que todas as instruções sejam concluídas
     {
-      issue();
-      execute();
-      write();
-      showState();
-      cycle++;
+      issue();     // Estágio de emissão
+      execute();   // Estágio de execução
+      write();     // Estágio de escrita
+      showState(); // Exibe o estado atual para debugging
+      cycle++;     // Incrementa o ciclo
     }
-    outputFile << "\nExecução completa\n";
+    outputFile << "\nExecução completa\n"; // Log de execução completa
   }
 
   void showState()
@@ -240,6 +240,20 @@ public:
     return true;
   }
 
+  /**
+   * @brief Renomeia um registrador para um registrador temporário, se disponível.
+   *
+   * Esta função renomeia um registrador dado para um registrador temporário, se um estiver disponível.
+   * Primeiro, encontra um registrador temporário disponível verificando os flags busyRead e busyWrite.
+   * Se um registrador temporário disponível for encontrado, atualiza o mapa de renomeação e
+   * renomeia todas as ocorrências subsequentes do registrador alvo na lista de instruções.
+   *
+   * @param target Ponteiro para o registrador a ser renomeado.
+   * @param index O índice da instrução a partir do qual começar a renomeação.
+   *
+   * O primeiro loop itera através dos registradores temporários para encontrar um disponível.
+   * O segundo loop itera através das instruções a partir do índice dado para renomear todas as ocorrências do registrador alvo.
+   */
   void renameRegister(Register *target, size_t index)
   {
     // Declara o início dos registradores temporários
@@ -290,6 +304,18 @@ public:
   }
 
   // Faz o estágio de emissão (issue)
+  /**
+   * @brief Emite instruções para unidades funcionais disponíveis.
+   *
+   * A função issue() percorre a lista de instruções e tenta emitir cada instrução para uma unidade funcional disponível,
+   * dependendo do tipo de operação (add, sub, mul, div, sw, lw). Se a unidade funcional estiver disponível e os operandos
+   * necessários não estiverem ocupados, a instrução é marcada como em execução e a unidade funcional é marcada como ocupada.
+   *
+   * - Se a instrução já estiver sendo executada, completada ou não estiver emitida, ela é marcada como emitida.
+   * - Dependendo do tipo de operação, a função busca uma unidade funcional disponível correspondente.
+   * - Verifica se os operandos estão disponíveis e se há dependências falsas ou verdadeiras.
+   * - Atualiza o estado dos registradores e das unidades funcionais conforme necessário.
+   */
   void issue()
   {
     size_t constrain = instructions.size();
@@ -299,7 +325,7 @@ public:
     }
     for (size_t i = 0; i < constrain; i++)
     {
-      OperationInstruction *instruction = instructions[i];
+      Operation *instruction = instructions[i];
       FunctionalUnit *unit = nullptr;
       if (instruction->isExecuting || instruction->isCompleted || !instruction->isIssued)
       {
@@ -369,6 +395,14 @@ public:
   }
 
   // Faz o estágio de execução
+  /**
+   * @brief Executa o ciclo de execução das unidades funcionais.
+   *
+   * Esta função percorre todas as unidades funcionais de adição, multiplicação e armazenamento,
+   * decrementando o número de ciclos de execução restantes para cada instrução em execução.
+   * Quando o número de ciclos de execução de uma instrução chega a zero, a instrução é marcada
+   * como não mais em execução.
+   */
   void execute()
   {
     for (size_t i = 0; i < addUnits.size(); i++)
@@ -420,6 +454,17 @@ public:
   }
 
   // Executa as funções da escrita
+  /**
+   * @brief Função responsável por escrever o resultado da execução das instruções nas unidades funcionais.
+   *
+   * @param unitType Vetor de ponteiros para unidades funcionais.
+   *
+   * Esta função percorre todas as unidades funcionais fornecidas e, para cada unidade que está ocupada,
+   * mas cuja instrução não está em execução e não foi completada, marca a instrução como completada e
+   * libera a unidade funcional. Dependendo da operação da instrução, atualiza o valor do registrador de
+   * destino ou a memória cache. Libera os registradores utilizados pela instrução e, se necessário,
+   * retorna o registrador renomeado.
+   */
   void writeExecution(std::vector<FunctionalUnit *> &unitType)
   {
     for (size_t i = 0; i < unitType.size(); i++)
@@ -471,6 +516,15 @@ public:
     }
   }
 
+  /**
+   * @brief Renomeia os registradores de destino e origem nas instruções e remove o registrador renomeado da lista de renomeados.
+   *
+   * Esta função percorre a lista de instruções e substitui os nomes dos registradores de destino e origem pelo nome renomeado.
+   * Em seguida, remove o registrador renomeado da lista de renomeados.
+   *
+   * @param target Ponteiro para o registrador que será renomeado.
+   * @param index Índice do registrador na lista de renomeados.
+   */
   void returnRenamed(Register *target, size_t index)
   {
     // Renomear os valores na lista de instrução
@@ -543,35 +597,36 @@ public:
     }
     return 0;
   }
-  // void detectDependencies(std::ofstream &outputFile)
-  // {
-  //     outputFile << "\n> Dependências de Instruções Recém-Lidas:";
+  //  deu mais ou menos certo, ainda tem bugs
+  void detectDependencies(std::ofstream &outputFile)
+  {
+    outputFile << "\n> Dependências de Instruções Recém-Lidas:";
 
-  //     for (size_t i = 0; i < instructions.size(); i++)
-  //     {
-  //         // Only check recently issued instructions
-  //         if (instructions[i]->isIssued && !instructions[i]->isExecuting && !instructions[i]->isCompleted)
-  //         {
-  //             // Check source registers for dependencies
-  //             std::vector<std::string> dependencyTypes = checkRegisterDependencies(instructions[i]);
+    for (size_t i = 0; i < instructions.size(); i++)
+    {
+      // Only check recently issued instructions
+      if (instructions[i]->isIssued && !instructions[i]->isExecuting && !instructions[i]->isCompleted)
+      {
+        // Check source registers for dependencies
+        std::vector<std::string> dependencyTypes = checkRegisterDependencies(instructions[i]);
 
-  //             if (!dependencyTypes.empty())
-  //             {
-  //                 outputFile << "\n Instrução: "
-  //                            << instructions[i]->op << " "
-  //                            << instructions[i]->dest << " "
-  //                            << instructions[i]->src1 << " "
-  //                            << instructions[i]->src2;
+        if (!dependencyTypes.empty())
+        {
+          outputFile << "\n Instrução: "
+                     << instructions[i]->op << " "
+                     << instructions[i]->dest << " "
+                     << instructions[i]->src1 << " "
+                     << instructions[i]->src2;
 
-  //                 for (const auto &depType : dependencyTypes)
-  //                 {
-  //                     outputFile << "\n  - " << depType;
-  //                 }
-  //             }
-  //         }
-  //     }
-  // }
-  std::vector<std::string> checkRegisterDependencies(OperationInstruction *instruction)
+          for (const auto &depType : dependencyTypes)
+          {
+            outputFile << "\n  - " << depType;
+          }
+        }
+      }
+    }
+  }
+  std::vector<std::string> checkRegisterDependencies(Operation *instruction)
   {
     std::vector<std::string> dependencies;
 
@@ -625,7 +680,7 @@ int main(int argc, char *argv[])
   }
 
   // Leitura das instruções a partir de um arquivo de texto
-  std::vector<OperationInstruction *> instructions;
+  std::vector<Operation *> instructions;
   std::ifstream input(argv[1]);
 
   if (!input.is_open())
@@ -647,7 +702,7 @@ int main(int argc, char *argv[])
     std::istringstream iss(line);
     std::string op, dest, src1, src2;
     iss >> op >> dest >> src1 >> src2;
-    instructions.push_back(new OperationInstruction(op, dest, src1, src2));
+    instructions.push_back(new Operation(op, dest, src1, src2));
   }
 
   input.close();
